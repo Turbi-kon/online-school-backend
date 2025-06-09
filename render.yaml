@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: online-school-backend
+    env: python
+    repo: https://github.com/Turbi-kon/online-school-backend
+    branch: main
+    buildCommand: pip install -r requirements.txt
+    startCommand: daphne online_school.asgi:application
+    envVars:
+      - key: DJANGO_SETTINGS_MODULE
+        value: online_school.settings
+      - key: SECRET_KEY
+        value: django-insecure-kkznnby52ubw34b*(#4b5rd%9=83f%ek0fmi!=0xdxbs2g2(*x
+      - key: DEBUG
+        value: false
+      - key: DATABASE_URL
+        value: postgresql://turbikon:4LS4B9BY49m6n4BfwCi7gxelU09PkHVL@dpg-d13k1rogjchc738uugig-a/online_classroom_db
+      - key: REDIS_URL
+        value: redis://redis:<port>  # или Render Redis instance URL
+      - key: MINIO_ENDPOINT
+        value: <Render MinIO address>
+      - key: MINIO_ACCESS_KEY
+        value: <key>
+      - key: MINIO_SECRET_KEY
+        value: <secret>
+      - key: ALLOWED_HOSTS
+        value: your-render-domain.onrender.com
