@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h2>Вход в аккаунт</h2>
+    <form method="POST" action="/login/" id="login-form">
+        <label for="username">Имя пользователя:</label><br>
+        <input type="text" id="username" name="username" required><br><br>
+
+        <label for="password">Пароль:</label><br>
+        <input type="password" id="password" name="password" required><br><br>
+
+        <button type="submit">Login</button>
+    </form>
+
+    <p id="error-message" style="color: red;"></p>
+
+    <script>
+        document.getElementById('login-form').onsubmit = async function(event) {
+            event.preventDefault();
+            
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+
+            const response = await fetch('/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ username: username, password: password }),
+            });
+
+            const data = await response.json();
+            if (response.ok) {
+                // Сохраняем токен в localStorage или sessionStorage
+                localStorage.setItem('access_token', data.access);
+                localStorage.setItem('refresh_token', data.refresh);
+                alert('Login successful');
+                // Перенаправить на главную страницу или другое место
+                window.location.href = '/';
+            } else {
+                // Показываем ошибку, если авторизация не удалась
+                document.getElementById('error-message').textContent = data.error || 'Ошибка аутентификации';
+            }
+        };
+    </script>
+</body>
+</html>
